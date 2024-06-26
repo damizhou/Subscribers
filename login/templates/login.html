@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            transform: scale(2); /* 所有元素等比例扩大两倍 */
+        }
+        #dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: white;
+            border: 1px solid black;
+            display: none;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            width: 100%; /* 使表单组宽度100% */
+        }
+        .form-group label {
+            margin-right: 10px;
+            min-width: 80px; /* 确保标签宽度一致 */
+            text-align: right;
+        }
+        .form-group input {
+            padding: 5px;
+            font-size: 1rem;
+            flex: 1; /* 使输入框填满剩余空间 */
+        }
+        input[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            align-self: center; /* 确保提交按钮居中 */
+        }
+    </style>
+    <script>
+        function showMessageAndRedirect(message) {
+            const dialog = document.getElementById('dialog');
+            dialog.textContent = message;
+            dialog.style.display = 'block';
+            setTimeout(function() {
+                dialog.style.display = 'none';
+                window.location.href = "/user_list";
+            }, 1500);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>登录</h1>
+        <form method="post">
+            <div class="form-group">
+                <label for="username">用户名:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <input type="submit" value="登录">
+        </form>
+        <div id="dialog"></div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <script>
+                    {% for message in messages %}
+                        {% if message == "登录成功" %}
+                            showMessageAndRedirect("{{ message }}");
+                        {% else %}
+                            alert("{{ message }}");
+                        {% endif %}
+                    {% endfor %}
+                </script>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改用户信息</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .container input, .container select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+        }
+        .container .btn-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .container .btn-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2E86C1;
+            color: white;
+            cursor: pointer;
+        }
+        .container .btn-group button.cancel {
+            background-color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>修改用户信息</h2>
+        <form method="post">
+            <label for="username">用户名</label>
+            <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+            <label for="user_type">用户类别</label>
+            <select id="user_type" name="user_type">
+                <option value="普通用户" {% if user.type == '普通用户' %}selected{% endif %}>普通用户</option>
+                <option value="普通可信用户" {% if user.type == '普通可信用户' %}selected{% endif %}>普通可信用户</option>
+                <option value="优质可信用户" {% if user.type == '优质可信用户' %}selected{% endif %}>优质可信用户</option>
+            </select>
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" value="{{ user.password }}" required>
+            <label for="confirm_password">密码确认</label>
+            <input type="password" id="confirm_password" name="confirm_password" value="{{ user.password }}" required>
+            <div class="btn-group">
+                <button type="submit">修改</button>
+                <button type="button" class="cancel" onclick="window.location.href='{{ url_for('user_list.user_list') }}'">取消</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

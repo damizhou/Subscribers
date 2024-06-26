@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户列表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #2E86C1;
+            color: white;
+        }
+        td {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) td {
+            background-color: #ffffff;
+        }
+        .modify, .add {
+            color: blue;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .add {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2E86C1;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .add-container {
+            text-align: right;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>用户列表</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>类别</th>
+                <th>添加时间</th>
+                <th>最近一次登录设备MAC地址</th>
+                <th>最近一次登录时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.type }}</td>
+                <td>{{ user.added_time }}</td>
+                <td>{{ user.mac_address }}</td>
+                <td>{{ user.last_login }}</td>
+                <td><a href="{{ url_for('user_list.edit_user', username=user.username) }}" class="modify">修改</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="add-container">
+        <a href="{{ url_for('user_list.add_user') }}" class="add">添加</a>
+    </div>
+</body>
+</html>
